@@ -59,73 +59,111 @@ const matches = [
 // Function to create a match element
 function createMatchElement(match) {
   return `
-        <div class="match">
-            <div class="match-header">
-                <div class="match-status">${match.status}</div>
-                <div class="match-tournament"><img src="${match.tournamentLogo}" />${match.tournament}</div>
-                <div class="match-actions">
-                    
-                </div>
-            </div>
-            <div class="match-content">
-                <div class="column">
-                    <div class="team team--home">
-                        <div class="team-logo">
-                            <img src="${match.homeTeam.logo}" />
-                        </div>
-                        <h2 class="team-name">${match.homeTeam.name}</h2>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="match-details">
-                        <div class="match-date">
-                            ${match.date} at <strong>${match.time}</strong>
-                        </div>
-                        <div class="match-score">
-                            <span class="match-score-number match-score-number--leading">${match.score.home}</span>
-                            <span class="match-score-divider">:</span>
-                            <span class="match-score-number">${match.score.away}</span>
-                        </div>
-                        <div class="match-time-lapsed">
-                            ${match.timeLapsed}
-                        </div>
-                        <div class="match-referee">
-                            Trọng tài: <strong>${match.referee}</strong>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="team team--away">
-                        <div class="team-logo">
-                            <img src="${match.awayTeam.logo}" />
-                        </div>
-                        <h2 class="team-name">${match.awayTeam.name}</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div class="match">
+          <div class="match-header">
+              <div class="match-status">${match.status}</div>
+              <div class="match-tournament"><img src="${match.tournamentLogo}" />${match.tournament}</div>
+              <div class="match-actions"></div>
+          </div>
+          <div class="match-content">
+              <div class="column">
+                  <div class="team team--home">
+                      <div class="team-logo">
+                          <img src="${match.homeTeam.logo}" />
+                      </div>
+                      <h2 class="team-name">${match.homeTeam.name}</h2>
+                  </div>
+              </div>
+              <div class="column">
+                  <div class="match-details">
+                      <div class="match-date">
+                          ${match.date} at <strong>${match.time}</strong>
+                      </div>
+                      <div class="match-score">
+                          <span class="match-score-number match-score-number--leading">${match.score.home}</span>
+                          <span class="match-score-divider">:</span>
+                          <span class="match-score-number">${match.score.away}</span>
+                      </div>
+                      <div class="match-time-lapsed">
+                          ${match.timeLapsed}
+                      </div>
+                      <div class="match-referee">
+                          Trọng tài: <strong>${match.referee}</strong>
+                      </div>
+                  </div>
+              </div>
+              <div class="column">
+                  <div class="team team--away">
+                      <div class="team-logo">
+                          <img src="${match.awayTeam.logo}" />
+                      </div>
+                      <h2 class="team-name">${match.awayTeam.name}</h2>
+                  </div>
+              </div>
+          </div>
+      </div>
     `;
 }
 
-function renderMatches(container, matchData) {
-  container.innerHTML = matchData.map(createMatchElement).join("");
+function createMatchListElement(matches) {
+  return `
+  <div class="container__box">
+  
+  <div class="container__list">Danh sách thi đấu</div>
+      <div class="match-list">
+          ${matches
+            .map(
+              (match) => `
+              <div class="match-list-item">
+                  <div class="match-header">
+                      <div class="match-status">${match.status}</div>
+                      <div class="match-tournament"><img src="${match.tournamentLogo}" />${match.tournament}</div>
+                  </div>
+                  <div class="match__details-list">
+                      <div class="team team--home">
+                          <div class="team-logo"><img src="${match.homeTeam.logo}" /></div>
+                          <h2 class="team-name">${match.homeTeam.name}</h2>
+                      </div>
+                      <div class="match-score">
+                          <span class="match-score-number match-score-number--leading">${match.score.home}</span>
+                          <span class="match-score-divider">:</span>
+                          <span class="match-score-number">${match.score.away}</span>
+                      </div>
+                      <div class="team team--away">
+                          <div class="team-logo"><img src="${match.awayTeam.logo}" /></div>
+                          <h2 class="team-name">${match.awayTeam.name}</h2>
+                      </div>
+                  </div>
+              </div>
+          `
+            )
+            .join("")}
+      </div>
+      </div>
+    `;
 }
 
 function startMatchCarousel(container, matchData, interval) {
   let currentIndex = 0;
 
   function showNextMatch() {
-    container.innerHTML = createMatchElement(matchData[currentIndex]);
-    currentIndex = (currentIndex + 1) % matchData.length;
+    if (currentIndex === matchData.length) {
+      // Display the list of all matches
+      container.innerHTML = createMatchListElement(matchData);
+      currentIndex = 0; // Reset the index to start again
+    } else {
+      // Display the current match
+      container.innerHTML = createMatchElement(matchData[currentIndex]);
+      currentIndex++;
+    }
   }
 
-  showNextMatch();
-  setInterval(showNextMatch, interval);
+  showNextMatch(); // Show the first match immediately
+  setInterval(showNextMatch, interval); // Continue showing the next matches
 }
 
 // Get the match container
 const matchContainer = document.getElementById("match-container");
 
-// thời gian hiển thị slice
-startMatchCarousel(matchContainer, matches, 5000);
+// Start the carousel with a 5-second interval
+startMatchCarousel(matchContainer, matches, 50000);
