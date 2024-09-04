@@ -166,4 +166,4 @@ function startMatchCarousel(container, matchData, interval) {
 const matchContainer = document.getElementById("match-container");
 
 // Start the carousel with a 5-second interval
-startMatchCarousel(matchContainer, matches, 50000);
+startMatchCarousel(matchContainer, matches, 5000);
