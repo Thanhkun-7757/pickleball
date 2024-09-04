@@ -69,7 +69,7 @@ function createMatchElement(match) {
               <div class="column">
                   <div class="team team--home">
                       <div class="team-logo">
-                          <img src="${match.homeTeam.logo}" />
+                          <img class="img__logo" src="${match.homeTeam.logo}" />
                       </div>
                       <h2 class="team-name">${match.homeTeam.name}</h2>
                   </div>
@@ -95,7 +95,7 @@ function createMatchElement(match) {
               <div class="column">
                   <div class="team team--away">
                       <div class="team-logo">
-                          <img src="${match.awayTeam.logo}" />
+                          <img class="img__logo" src="${match.awayTeam.logo}" />
                       </div>
                       <h2 class="team-name">${match.awayTeam.name}</h2>
                   </div>
@@ -116,12 +116,12 @@ function createMatchListElement(matches) {
               (match) => `
               <div class="match-list-item">
                   <div class="match-header">
-                      <div class="match-status">${match.status}</div>
+                      <div class="match-status-list">${match.status}</div>
                       <div class="match-tournament"><img src="${match.tournamentLogo}" />${match.tournament}</div>
                   </div>
                   <div class="match__details-list">
                       <div class="team team--home">
-                          <div class="team-logo"><img src="${match.homeTeam.logo}" /></div>
+                          <div class="team-logo"><img class="img__logo-list" src="${match.homeTeam.logo}" /></div>
                           <h2 class="team-name">${match.homeTeam.name}</h2>
                       </div>
                       <div class="match-score">
@@ -130,7 +130,7 @@ function createMatchListElement(matches) {
                           <span class="match-score-number">${match.score.away}</span>
                       </div>
                       <div class="team team--away">
-                          <div class="team-logo"><img src="${match.awayTeam.logo}" /></div>
+                          <div class="team-logo"><img class="img__logo-list" src="${match.awayTeam.logo}" /></div>
                           <h2 class="team-name">${match.awayTeam.name}</h2>
                       </div>
                   </div>
