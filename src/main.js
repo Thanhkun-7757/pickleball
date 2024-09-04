@@ -122,7 +122,7 @@ function createMatchListElement(matches) {
                   <div class="match__details-list">
                       <div class="team team--home">
                           <div class="team-logo"><img class="img__logo-list" src="${match.homeTeam.logo}" /></div>
-                          <h2 class="team-name">${match.homeTeam.name}</h2>
+                          <h2 class="team-name-list">${match.homeTeam.name}</h2>
                       </div>
                       <div class="match-score">
                           <span class="match-score-number match-score-number--leading">${match.score.home}</span>
@@ -131,7 +131,7 @@ function createMatchListElement(matches) {
                       </div>
                       <div class="team team--away">
                           <div class="team-logo"><img class="img__logo-list" src="${match.awayTeam.logo}" /></div>
-                          <h2 class="team-name">${match.awayTeam.name}</h2>
+                          <h2 class="team-name-list">${match.awayTeam.name}</h2>
                       </div>
                   </div>
               </div>
@@ -166,4 +166,4 @@ function startMatchCarousel(container, matchData, interval) {
 const matchContainer = document.getElementById("match-container");
 
 // Start the carousel with a 5-second interval
-startMatchCarousel(matchContainer, matches, 5000);
+startMatchCarousel(matchContainer, matches, 100000);

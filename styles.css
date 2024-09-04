@@ -168,8 +168,8 @@ body {
 		0 0 0 15px var(--color-bg-secondary);
 }
 .img__logo-list {
-	width: 150px;
-	height: 150px;
+	width: 100px;
+	height: 100px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -184,7 +184,11 @@ body {
 	font-size: 32px;
 	font-weight: 600;
 }
-
+.team-name-list {
+	text-align: center;
+	font-size: 32px;
+	font-weight: 600;
+}
 .match-details {
 	display: flex;
 	flex-direction: column;
@@ -312,6 +316,26 @@ body {
 		width: 100% !important;
 		min-width: 100% !important;
 	}
+	.img__logo{
+		width: 150px !important;
+		height: 150px !important;
+	}
+	.team-name {
+		font-size: 20px;
+	}
+	.match-date, .match-referee {
+		font-size: 18px;
+	}
+	.team-name-list {
+		margin-top: 0 !important;
+	}
+	.match-header {
+		padding-top: 15px;
+		padding-bottom: 0px !important;
+	}
+	.container__box{
+		margin-top: 50px !important;
+	}
 }
 .match-list{
 	border-color: var(--color-bg-primary);
@@ -329,12 +353,12 @@ font-size: 40px;
 	width: 100%;
 	align-items: center;
     justify-content: center;
-	margin-top: 600px;
+	margin-top: 150px;
 }
 
 @media (max-width:600px) {
 	.container__box{
-		margin-top: 210px;
+		margin-top: 800px;
 		width: 100%;
 	}
 }
