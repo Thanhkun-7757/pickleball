@@ -1,63 +1,58 @@
-const matches = [
-  {
-    status: "Live",
-    tournament: "Pickleball An Sinh Sport",
-    tournamentLogo: "https://assets.codepen.io/285131/pl-logo.svg",
-    homeTeam: {
-      name: "West Ham",
-      logo: "https://assets.codepen.io/285131/whufc.svg",
-    },
-    awayTeam: {
-      name: "Chelsea",
-      logo: "https://assets.codepen.io/285131/chelsea.svg",
-    },
-    date: "12 Aug",
-    time: "19:00",
-    score: { home: 2, away: 0 },
-    timeLapsed: "72'",
-    referee: "Joseph Hicks",
-  },
-  {
-    status: "Live",
-    tournament: "Pickleball An Sinh Sport",
-    tournamentLogo: "https://assets.codepen.io/285131/pl-logo.svg",
-    homeTeam: {
-      name: "thanh",
-      logo: "https://www.didongmy.com/vnt_upload/news/05_2024/anh-27-meme-dang-yeu-didongmy.jpg",
-    },
-    awayTeam: {
-      name: "Sơn",
-      logo: "https://www.didongmy.com/vnt_upload/news/05_2024/anh-2-meme-dang-yeu-didongmy_1.jpg",
-    },
-    date: "12 Aug",
-    time: "19:00",
-    score: { home: 2, away: 0 },
-    timeLapsed: "72'",
-    referee: "thanh",
-  },
-  {
-    status: "Live",
-    tournament: "Pickleball An Sinh Sport",
-    tournamentLogo: "https://assets.codepen.io/285131/pl-logo.svg",
-    homeTeam: {
-      name: "CN",
-      logo: "https://assets.codepen.io/285131/whufc.svg",
-    },
-    awayTeam: {
-      name: "VN",
-      logo: "https://assets.codepen.io/285131/chelsea.svg",
-    },
-    date: "12 Aug",
-    time: "19:00",
-    score: { home: 2, away: 0 },
-    timeLapsed: "72'",
-    referee: "Sơn",
-  },
-];
-//<button class="btn-icon"><i class="material-icons-outlined">grade</i></button>
-//<button class="btn-icon"><i class="material-icons-outlined">add_alert</i></button>
-// Function to create a match element
+// Function to fetch match data from the API
+async function fetchMatchData(id) {
+  try {
+    const response = await fetch(
+      `https://ligo3-dev4.ligo.vn/api/v1.0/PickleballMangement/GetAllMatchSchedule/${id}`
+    );
+    const data = await response.json();
+    return data; // Assuming the API returns an array of matches
+  } catch (error) {
+    console.error("Error fetching match data:", error);
+    return []; // Return an empty array in case of error
+  }
+}
+function formatDateTime(matchDate) {
+  const dateObj = new Date(matchDate);
+
+  // Extract date in dd-MM-yyyy format
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const year = dateObj.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+
+  // Extract time in HH:mm format
+  const hours = String(dateObj.getHours()).padStart(2, "0");
+  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
+  const formattedTime = `${hours}:${minutes}`;
+
+  return { formattedDate, formattedTime };
+}
+// Function to create a match element (same as before)
 function createMatchElement(match) {
+  const { formattedDate, formattedTime } = formatDateTime(match.MatchDate);
+
+  // Tính thời gian hiện tại và thời gian của match.MatchDate
+  const currentTime = Date.now();
+  const matchTime = new Date(match.MatchDate).getTime();
+
+  // Tính thời gian đã trôi qua (ms -> seconds -> minutes -> hours)
+  const timeLapsedMs = currentTime - matchTime;
+  const timeLapsedMinutes = Math.floor(timeLapsedMs / (1000 * 60));
+  const hours = Math.floor(timeLapsedMinutes / 60);
+  const minutes = timeLapsedMinutes % 60;
+
+  // Định dạng thời gian trôi qua thành "X giờ Y phút"
+  const timeLapsed = `${hours} giờ ${minutes} phút`;
+
+  // Kiểm tra và thay thế nếu FirstTeam hoặc SecondTeam không có dữ liệu
+  const firstTeam = match.FirstTeam ? match.FirstTeam : "User 1";
+  const secondTeam = match.SecondTeam ? match.SecondTeam : "User 2";
+  const logoFirstTeam = match.LogoFirstTeam
+    ? match.LogoFirstTeam
+    : `./src/img/user.jpg`;
+  const logoSecondTeam = match.LogoSecondTeam
+    ? match.LogoSecondTeam
+    : `./src/img/user.jpg`;
   return `
       <div class="match">
           <div class="match-header">
@@ -69,35 +64,33 @@ function createMatchElement(match) {
               <div class="column">
                   <div class="team team--home">
                       <div class="team-logo">
-                          <img class="img__logo" src="${match.homeTeam.logo}" />
+                          <img class="img__logo" src="${logoFirstTeam}" />
                       </div>
-                      <h2 class="team-name">${match.homeTeam.name}</h2>
+                      <h2 class="team-name">${firstTeam}</h2>
                   </div>
               </div>
               <div class="column">
                   <div class="match-details">
                       <div class="match-date">
-                          ${match.date} at <strong>${match.time}</strong>
+                          ${formattedDate} at <strong>${formattedTime}</strong>
                       </div>
                       <div class="match-score">
-                          <span class="match-score-number match-score-number--leading">${match.score.home}</span>
+                          <span class="match-score-number match-score-number--leading">${match.FirstTeamPoint}</span>
                           <span class="match-score-divider">:</span>
-                          <span class="match-score-number">${match.score.away}</span>
+                          <span class="match-score-number">${match.SecondTeamPoint}</span>
                       </div>
                       <div class="match-time-lapsed">
-                          ${match.timeLapsed}
-                      </div>
-                      <div class="match-referee">
-                          Trọng tài: <strong>${match.referee}</strong>
+                          ${timeLapsed}
                       </div>
                   </div>
               </div>
               <div class="column">
                   <div class="team team--away">
                       <div class="team-logo">
-                          <img class="img__logo" src="${match.awayTeam.logo}" />
+                          <img class="img__logo" src="${logoSecondTeam}" />
                       </div>
-                      <h2 class="team-name">${match.awayTeam.name}</h2>
+                      <h2 class="team-name">${secondTeam}</h2>
+                      
                   </div>
               </div>
           </div>
@@ -105,11 +98,20 @@ function createMatchElement(match) {
     `;
 }
 
+// Function to create a list of matches (same as before)
 function createMatchListElement(matches) {
+  // Kiểm tra và thay thế nếu FirstTeam hoặc SecondTeam không có dữ liệu
+  const firstTeam = matches.FirstTeam ? matches.FirstTeam : "User 1";
+  const secondTeam = matches.SecondTeam ? matches.SecondTeam : "User 2";
+  const logoFirstTeam = matches.LogoFirstTeam
+    ? matches.LogoFirstTeam
+    : `./src/img/user.jpg`;
+  const logoSecondTeam = matches.LogoSecondTeam
+    ? matches.LogoSecondTeam
+    : `./src/img/user.jpg`;
   return `
   <div class="container__box">
-  
-  <div class="container__list">Danh sách thi đấu</div>
+      <div class="container__list">Danh sách thi đấu</div>
       <div class="match-list">
           ${matches
             .map(
@@ -121,49 +123,54 @@ function createMatchListElement(matches) {
                   </div>
                   <div class="match__details-list">
                       <div class="team team--home">
-                          <div class="team-logo"><img class="img__logo-list" src="${match.homeTeam.logo}" /></div>
-                          <h2 class="team-name-list">${match.homeTeam.name}</h2>
+                          <div class="team-logo"><img class="img__logo-list" src="${logoFirstTeam}" /></div>
+                          <h2 class="team-name-list">${firstTeam}</h2>
                       </div>
                       <div class="match-score">
-                          <span class="match-score-number match-score-number--leading">${match.score.home}</span>
+                          <span class="match-score-number match-score-number--leading">${match.FirstTeamPoint}</span>
                           <span class="match-score-divider">:</span>
-                          <span class="match-score-number">${match.score.away}</span>
+                          <span class="match-score-number">${match.SecondTeamPoint}</span>
                       </div>
                       <div class="team team--away">
-                          <div class="team-logo"><img class="img__logo-list" src="${match.awayTeam.logo}" /></div>
-                          <h2 class="team-name-list">${match.awayTeam.name}</h2>
+                          <div class="team-logo"><img class="img__logo-list" src="${logoSecondTeam}" /></div>
+                          <h2 class="team-name-list">${secondTeam}</h2>
                       </div>
                   </div>
-              </div>
-          `
+              </div>`
             )
             .join("")}
       </div>
-      </div>
+  </div>
     `;
 }
 
-function startMatchCarousel(container, matchData, interval) {
+// Function to start the match carousel
+async function startMatchCarousel(container, id, interval) {
+  const matchData = await fetchMatchData(id); // Fetch data from API based on the given id
+
+  if (matchData.length === 0) {
+    container.innerHTML = "<p>No matches available</p>";
+    return;
+  }
+
   let currentIndex = 0;
 
   function showNextMatch() {
     if (currentIndex === matchData.length) {
-      // Display the list of all matches
       container.innerHTML = createMatchListElement(matchData);
-      currentIndex = 0; // Reset the index to start again
+      currentIndex = 0;
     } else {
-      // Display the current match
       container.innerHTML = createMatchElement(matchData[currentIndex]);
       currentIndex++;
     }
   }
 
-  showNextMatch(); // Show the first match immediately
-  setInterval(showNextMatch, interval); // Continue showing the next matches
+  showNextMatch();
+  setInterval(showNextMatch, interval);
 }
 
 // Get the match container
 const matchContainer = document.getElementById("match-container");
 
-// Start the carousel with a 5-second interval
-startMatchCarousel(matchContainer, matches, 5000);
+// Start the carousel with a 5-second interval and an example id (replace with dynamic id if necessary)
+startMatchCarousel(matchContainer, "1", 50000); // Replace "12345" with the actual ID to fetch
