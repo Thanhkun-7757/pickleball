@@ -143,39 +143,10 @@ function createMatchListElement(matches) {
     `;
 }
 
-async function fetchMatchData(id) {
-  try {
-    const response = await fetch(
-      `https://ligo3-dev4.ligo.vn/api/v1.0/PickleballMangement/GetAllMatchSchedule/${id}`
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-    return data; // Assuming the data structure matches the current 'matches' format
-  } catch (error) {
-    console.error("Error fetching match data:", error);
-    return null;
-  }
-}
-
-function startMatchCarousel(container, id, interval) {
+function startMatchCarousel(container, matchData, interval) {
   let currentIndex = 0;
-  let matchData = null; // To store fetched data
-
-  async function initializeCarousel() {
-    // Fetch match data only once
-    matchData = await fetchMatchData(id);
-    if (!matchData || matchData.length === 0) return;
-
-    // Start the display loop
-    showNextMatch();
-    setInterval(showNextMatch, interval); // Continue showing the next matches
-  }
 
   function showNextMatch() {
-    if (!matchData || matchData.length === 0) return;
-
     if (currentIndex === matchData.length) {
       // Display the list of all matches
       container.innerHTML = createMatchListElement(matchData);
@@ -187,13 +158,12 @@ function startMatchCarousel(container, id, interval) {
     }
   }
 
-  // Initialize carousel
-  initializeCarousel();
+  showNextMatch(); // Show the first match immediately
+  setInterval(showNextMatch, interval); // Continue showing the next matches
 }
 
 // Get the match container
 const matchContainer = document.getElementById("match-container");
 
-// Start the carousel with a 5-second interval and a specific match ID
-const matchId = 1; // Replace with the actual match ID you want to use
-startMatchCarousel(matchContainer, matchId, 5000);
+// Start the carousel with a 5-second interval
+startMatchCarousel(matchContainer, matches, 5000);
