@@ -56,8 +56,8 @@ function createMatchElement(match) {
   return `
       <div class="match">
           <div class="match-header">
-              <div class="match-status">${match.status}</div>
-              <div class="match-tournament"><img src="${match.tournamentLogo}" />${match.tournament}</div>
+              <div class="match-status">Live</div>
+              <div class="match-tournament"><img src="./src/img/logo-mau.png" /></div>
               <div class="match-actions"></div>
           </div>
           <div class="match-content">
@@ -72,7 +72,7 @@ function createMatchElement(match) {
               <div class="column">
                   <div class="match-details">
                       <div class="match-date">
-                          ${formattedDate} at <strong>${formattedTime}</strong>
+                          ${formattedDate} lúc <strong class="match-date">${formattedTime}</strong>
                       </div>
                       <div class="match-score">
                           <span class="match-score-number match-score-number--leading">${match.FirstTeamPoint}</span>
@@ -90,7 +90,7 @@ function createMatchElement(match) {
                           <img class="img__logo" src="${logoSecondTeam}" />
                       </div>
                       <h2 class="team-name">${secondTeam}</h2>
-                      
+
                   </div>
               </div>
           </div>
@@ -98,8 +98,12 @@ function createMatchElement(match) {
     `;
 }
 
-// Function to create a list of matches (same as before)
+// Function to create a list of matches with 6 boxes, filling empty boxes if necessary
 function createMatchListElement(matches) {
+  const totalBoxes = 6;
+  const filledBoxes = matches.length;
+  const emptyBoxes = totalBoxes - filledBoxes;
+
   // Kiểm tra và thay thế nếu FirstTeam hoặc SecondTeam không có dữ liệu
   const firstTeam = matches.FirstTeam ? matches.FirstTeam : "User 1";
   const secondTeam = matches.SecondTeam ? matches.SecondTeam : "User 2";
@@ -109,39 +113,68 @@ function createMatchListElement(matches) {
   const logoSecondTeam = matches.LogoSecondTeam
     ? matches.LogoSecondTeam
     : `./src/img/user.jpg`;
-  return `
-  <div class="container__box">
-      <div class="container__list">Danh sách thi đấu</div>
-      <div class="match-list">
-          ${matches
-            .map(
-              (match) => `
-              <div class="match-list-item">
-                  <div class="match-header">
-                      <div class="match-status-list">${match.status}</div>
-                      <div class="match-tournament"><img src="${match.tournamentLogo}" />${match.tournament}</div>
-                  </div>
-                  <div class="match__details-list">
-                      <div class="team team--home">
-                          <div class="team-logo"><img class="img__logo-list" src="${logoFirstTeam}" /></div>
-                          <h2 class="team-name-list">${firstTeam}</h2>
-                      </div>
-                      <div class="match-score">
-                          <span class="match-score-number match-score-number--leading">${match.FirstTeamPoint}</span>
-                          <span class="match-score-divider">:</span>
-                          <span class="match-score-number">${match.SecondTeamPoint}</span>
-                      </div>
-                      <div class="team team--away">
-                          <div class="team-logo"><img class="img__logo-list" src="${logoSecondTeam}" /></div>
-                          <h2 class="team-name-list">${secondTeam}</h2>
-                      </div>
-                  </div>
-              </div>`
-            )
-            .join("")}
+
+  // Render the filled match boxes
+  let matchListHTML = matches
+    .map(
+      (match) => `
+      <div class="match-list-item">
+          <div class="match-header-list">
+              <div class="match-status-list">Live</div>
+          </div>
+          <div class="match__details-list">
+              <div class="team team--home">
+                  <div class="team-logo-list"><img class="img__logo-list" src="${logoFirstTeam}" /></div>
+                  <h2 class="team-name-list">${firstTeam}</h2>
+              </div>
+              <div class="match-score">
+                  <span class="match-score-number-list match-score-number--leading">${match.FirstTeamPoint}</span>
+                  <span class="match-score-divider">:</span>
+                  <span class="match-score-number-list">${match.SecondTeamPoint}</span>
+              </div>
+              <div class="team team--away">
+                  <div class="team-logo-list"><img class="img__logo-list" src="${logoSecondTeam}" /></div>
+                  <h2 class="team-name-list">${secondTeam}</h2>
+              </div>
+          </div>
+      </div>`
+    )
+    .join("");
+
+  // Render the empty boxes if there are not enough matches
+  for (let i = 0; i < emptyBoxes; i++) {
+    matchListHTML += `
+      <div class="match-list-item">
+          <div class="match-header-list">
+              <div class="match-status-list">-</div>
+          </div>
+          <div class="match__details-list">
+              <div class="team team--home">
+                  <div class="team-logo-list"><img class="img__logo-list" src="./src/img/user.jpg" /></div>
+                  <h2 class="team-name-list">-</h2>
+              </div>
+              <div class="match-score">
+                  <span class="match-score-number-list match-score-number--leading">-</span>
+                  <span class="match-score-divider">:</span>
+                  <span class="match-score-number-list">-</span>
+              </div>
+              <div class="team team--away">
+                  <div class="team-logo-list"><img class="img__logo-list" src="./src/img/user.jpg" /></div>
+                  <h2 class="team-name-list">-</h2>
+              </div>
+          </div>
       </div>
-  </div>
     `;
+  }
+
+  return `
+    <div class="container__box">
+        <div class="container__list">Danh sách thi đấu</div>
+        <div class="match-list">
+            ${matchListHTML}
+        </div>
+    </div>
+  `;
 }
 
 // Function to start the match carousel
@@ -173,4 +206,4 @@ async function startMatchCarousel(container, id, interval) {
 const matchContainer = document.getElementById("match-container");
 
 // Start the carousel with a 5-second interval and an example id (replace with dynamic id if necessary)
-startMatchCarousel(matchContainer, "1", 50000); // Replace "12345" with the actual ID to fetch
+startMatchCarousel(matchContainer, "1", 500000); // Replace "12345" with the actual ID to fetch
