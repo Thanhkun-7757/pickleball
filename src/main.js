@@ -1,8 +1,20 @@
 // Function to fetch match data from the API
-async function fetchMatchData(id) {
+// async function fetchMatchData(id) {
+//   try {
+//     const response = await fetch(
+//       `https://ligo3-dev4.ligo.vn/api/v1.0/PickleballMangement/GetAllMatchSchedule/${id}`
+//     );
+//     const data = await response.json();
+//     return data; // Assuming the API returns an array of matches
+//   } catch (error) {
+//     console.error("Error fetching match data:", error);
+//     return []; // Return an empty array in case of error
+//   }
+// }
+async function fetchMatchData(screenNo) {
   try {
     const response = await fetch(
-      `https://ligo3-dev4.ligo.vn/api/v1.0/PickleballMangement/GetAllMatchSchedule/${id}`
+      `https://ligo3-dev4.ligo.vn/api/v1.0/PickleballMangement/GetScheduleByScreen/${screenNo}`
     );
     const data = await response.json();
     return data; // Assuming the API returns an array of matches
@@ -206,4 +218,16 @@ async function startMatchCarousel(container, id, interval) {
 const matchContainer = document.getElementById("match-container");
 
 // Start the carousel with a 5-second interval and an example id (replace with dynamic id if necessary)
-startMatchCarousel(matchContainer, "1", 500000); // Replace "12345" with the actual ID to fetch
+const searchParam = new URLSearchParams(window.location.search);
+if (searchParam.size >= 1) {
+  const src = searchParam.get("src");
+  if (typeof src === "string" && parseFloat(src)) {
+    startMatchCarousel(matchContainer, parseFloat(src), 500000);
+  } else {
+    alert("Vui lòng chọn src 1 hoặc 2");
+  }
+} else {
+  alert("Vui lòng chọn src");
+}
+
+// startMatchCarousel(matchContainer, "1", 500000); // Replace "12345" with the actual ID to fetch
