@@ -408,6 +408,7 @@ body {
 	.match-score-number {
 		font-size: 36px !important;
 	}
+	.match-score-divider-list,
 	.match-score-divider{
 		font-size: 28px !important;
 	}
