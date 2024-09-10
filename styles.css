@@ -48,7 +48,7 @@ body {
 	box-shadow: 0 0 2px 0 rgba(#303030, 0.1), 0 4px 4px 0 rgba(#303030, 0.1);
 	background-image: url('./src/img/background.jpg');
 	background-size: cover;
-	position: relative;
+	position: absolute;
 }
 
 .match::before {
@@ -293,7 +293,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 .match-score-divider {
-	font-size: 60px;
+	font-size: 120px;
 	font-weight: 700;
 	line-height: 1;
 	color: var(--color-text-icon);
@@ -346,16 +346,8 @@ body {
 }
 
 .container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	
 	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
 
 }
 .match__details-list{

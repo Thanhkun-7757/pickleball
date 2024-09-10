@@ -181,7 +181,6 @@ function createMatchListElement(matches) {
 
   return `
     <div class="container__box">
-        <div class="container__list">Danh sách thi đấu</div>
         <div class="match-list">
             ${matchListHTML}
         </div>
@@ -222,7 +221,7 @@ const searchParam = new URLSearchParams(window.location.search);
 if (searchParam.size >= 1) {
   const src = searchParam.get("src");
   if (typeof src === "string" && parseFloat(src)) {
-    startMatchCarousel(matchContainer, parseFloat(src), 5000);
+    startMatchCarousel(matchContainer, parseFloat(src), 500000);
   } else {
     alert("Vui lòng chọn src 1 hoặc 2");
   }
