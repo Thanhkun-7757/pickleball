@@ -302,6 +302,14 @@ body {
 	margin-right: 10px;
 }
 
+.match-score-divider-list {
+	font-size: 60px;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--color-text-icon);
+	margin-left: 10px;
+	margin-right: 10px;
+}
 .match-time-lapsed {
 	color: #DF9443;
 	font-size: 23px;

@@ -141,7 +141,7 @@ function createMatchListElement(matches) {
               </div>
               <div class="match-score">
                   <span class="match-score-number-list match-score-number--leading">${match.FirstTeamPoint}</span>
-                  <span class="match-score-divider">:</span>
+                  <span class="match-score-divider-list">:</span>
                   <span class="match-score-number-list">${match.SecondTeamPoint}</span>
               </div>
               <div class="team team--away">
