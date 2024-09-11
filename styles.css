@@ -102,7 +102,7 @@ body {
 .match-status-list {
 	background-color: var(--color-bg-alert);
 	color: var(--color-text-alert);
-	padding: 0px 12px;
+	padding: 5px 12px;
 	border-radius: 6px;
 	font-weight: 600;
 	font-size: 14px;
