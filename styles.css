@@ -37,6 +37,8 @@ body {
 	line-height: 1.5;
 	color: var(--color-text-primary);
 	background-color: var(--color-bg-secondary);
+	margin: 0;
+	padding: 0;
 }
 
 .match {
@@ -48,7 +50,7 @@ body {
 	box-shadow: 0 0 2px 0 rgba(#303030, 0.1), 0 4px 4px 0 rgba(#303030, 0.1);
 	background-image: url('./src/img/background.jpg');
 	background-size: cover;
-	position: relative;
+	position: absolute;
 }
 
 .match::before {
@@ -120,7 +122,6 @@ body {
 	align-items: center;
 	font-weight: 600;
 	font-size: 38px;
-	background-color: var(--color-bg-primary);
 	img {
 		width: 250px;
 		margin-right: 12px;
@@ -293,7 +294,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 .match-score-divider {
-	font-size: 60px;
+	font-size: 120px;
 	font-weight: 700;
 	line-height: 1;
 	color: var(--color-text-icon);
@@ -301,6 +302,14 @@ body {
 	margin-right: 10px;
 }
 
+.match-score-divider-list {
+	font-size: 60px;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--color-text-icon);
+	margin-left: 10px;
+	margin-right: 10px;
+}
 .match-time-lapsed {
 	color: #DF9443;
 	font-size: 23px;
@@ -346,16 +355,8 @@ body {
 }
 
 .container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	
 	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
 
 }
 .match__details-list{
@@ -407,6 +408,7 @@ body {
 	.match-score-number {
 		font-size: 36px !important;
 	}
+	.match-score-divider-list,
 	.match-score-divider{
 		font-size: 28px !important;
 	}
@@ -459,6 +461,7 @@ font-size: 40px;
 	border-radius: 10px;
 	margin-bottom: 10px;
 	margin-top: 10px;
+	min-height: 135px;
 	background-color: #093453;
 
 }

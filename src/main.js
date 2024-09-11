@@ -141,7 +141,7 @@ function createMatchListElement(matches) {
               </div>
               <div class="match-score">
                   <span class="match-score-number-list match-score-number--leading">${match.FirstTeamPoint}</span>
-                  <span class="match-score-divider">:</span>
+                  <span class="match-score-divider-list">:</span>
                   <span class="match-score-number-list">${match.SecondTeamPoint}</span>
               </div>
               <div class="team team--away">
@@ -160,28 +160,13 @@ function createMatchListElement(matches) {
           <div class="match-header-list">
               
           </div>
-          <div class="match__details-list">
-              <div class="team team--home">
-                  <div class="team-logo-list"><img class="img__logo-list" src="./src/img/user.jpg" /></div>
-                  <h2 class="team-name-list">-</h2>
-              </div>
-              <div class="match-score">
-                  <span class="match-score-number-list match-score-number--leading">-</span>
-                  <span class="match-score-divider">:</span>
-                  <span class="match-score-number-list">-</span>
-              </div>
-              <div class="team team--away">
-                  <div class="team-logo-list"><img class="img__logo-list" src="./src/img/user.jpg" /></div>
-                  <h2 class="team-name-list">-</h2>
-              </div>
-          </div>
+         
       </div>
     `;
   }
 
   return `
     <div class="container__box">
-        <div class="container__list">Danh sách thi đấu</div>
         <div class="match-list">
             ${matchListHTML}
         </div>
@@ -222,7 +207,7 @@ const searchParam = new URLSearchParams(window.location.search);
 if (searchParam.size >= 1) {
   const src = searchParam.get("src");
   if (typeof src === "string" && parseFloat(src)) {
-    startMatchCarousel(matchContainer, parseFloat(src), 500000);
+    startMatchCarousel(matchContainer, parseFloat(src), 5000);
   } else {
     alert("Vui lòng chọn src 1 hoặc 2");
   }
@@ -231,4 +216,26 @@ if (searchParam.size >= 1) {
 }
 
 // startMatchCarousel(matchContainer, "1", 500000); // Replace "12345" with the actual ID to fetch
-//<div class="match-status-list">-</div>
+
+{
+  /* <div class="match-list-item">
+          <div class="match-header-list">
+              <div class="match-status-list">-</div>
+          </div>
+          <div class="match__details-list">
+              <div class="team team--home">
+                  <div class="team-logo-list"><img class="img__logo-list" src="./src/img/user.jpg" /></div>
+                  <h2 class="team-name-list">-</h2>
+              </div>
+              <div class="match-score">
+                  <span class="match-score-number-list match-score-number--leading">-</span>
+                  <span class="match-score-divider">:</span>
+                  <span class="match-score-number-list">-</span>
+              </div>
+              <div class="team team--away">
+                  <div class="team-logo-list"><img class="img__logo-list" src="./src/img/user.jpg" /></div>
+                  <h2 class="team-name-list">-</h2>
+              </div>
+          </div>
+      </div> */
+}
