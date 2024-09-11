@@ -68,7 +68,7 @@ function createMatchElement(match) {
   return `
       <div class="match">
           <div class="match-header">
-              <div class="match-status">Live</div>
+              <div class="match-status"><span class="live-icon"></span>Live</div>
               <div class="match-tournament"><img src="./src/img/logo-mau.png" /></div>
               <div class="match-actions"></div>
           </div>
@@ -132,7 +132,7 @@ function createMatchListElement(matches) {
       (match) => `
       <div class="match-list-item">
           <div class="match-header-list">
-              <div class="match-status-list">Live</div>
+              <div class="match-status-list"><span class="live-icon"></span>Live</div>
           </div>
           <div class="match__details-list">
               <div class="team team--home">
