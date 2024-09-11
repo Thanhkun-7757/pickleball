@@ -116,9 +116,6 @@ function createMatchListElement(matches) {
   const filledBoxes = matches.length;
   const emptyBoxes = totalBoxes - filledBoxes;
 
-  // Kiểm tra và thay thế nếu FirstTeam hoặc SecondTeam không có dữ liệu
-  const firstTeam = matches.FirstTeam ? matches.FirstTeam : "User 1";
-  const secondTeam = matches.SecondTeam ? matches.SecondTeam : "User 2";
   const logoFirstTeam = matches.LogoFirstTeam
     ? matches.LogoFirstTeam
     : `./src/img/user.jpg`;
@@ -137,16 +134,24 @@ function createMatchListElement(matches) {
           <div class="match__details-list">
               <div class="team team--home">
                   <div class="team-logo-list"><img class="img__logo-list" src="${logoFirstTeam}" /></div>
-                  <h2 class="team-name-list">${firstTeam}</h2>
+                  <h2 class="team-name-list">${
+                    match.FirstTeam ? match.FirstTeam : "User 1"
+                  }</h2>
               </div>
               <div class="match-score">
-                  <span class="match-score-number-list match-score-number--leading">${match.FirstTeamPoint}</span>
+                  <span class="match-score-number-list match-score-number--leading">${
+                    match.FirstTeamPoint
+                  }</span>
                   <span class="match-score-divider-list">:</span>
-                  <span class="match-score-number-list">${match.SecondTeamPoint}</span>
+                  <span class="match-score-number-list">${
+                    match.SecondTeamPoint
+                  }</span>
               </div>
               <div class="team team--away">
                   <div class="team-logo-list"><img class="img__logo-list" src="${logoSecondTeam}" /></div>
-                  <h2 class="team-name-list">${secondTeam}</h2>
+                  <h2 class="team-name-list">${
+                    match.SecondTeam ? match.SecondTeam : "User 2"
+                  }</h2>
               </div>
           </div>
       </div>`
