@@ -158,7 +158,7 @@ function createMatchListElement(matches) {
     matchListHTML += `
       <div class="match-list-item">
           <div class="match-header-list">
-              <div class="match-status-list">-</div>
+              
           </div>
           <div class="match__details-list">
               <div class="team team--home">
@@ -231,3 +231,4 @@ if (searchParam.size >= 1) {
 }
 
 // startMatchCarousel(matchContainer, "1", 500000); // Replace "12345" with the actual ID to fetch
+//<div class="match-status-list">-</div>
