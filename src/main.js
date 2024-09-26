@@ -179,27 +179,36 @@ function createMatchListElement(matches) {
 
 // Function to start the match carousel
 async function startMatchCarousel(container, id, interval) {
-  const matchData = await fetchMatchData(id); // Fetch data from API based on the given id
+  setInterval(async () => {
+    const matchData = await fetchMatchData(id); // Fetch data from API based on the given id
 
-  if (matchData.length === 0) {
-    container.innerHTML = "<p>No matches available</p>";
-    return;
-  }
-
-  let currentIndex = 0;
-
-  function showNextMatch() {
-    if (currentIndex === matchData.length) {
-      container.innerHTML = createMatchListElement(matchData);
-      currentIndex = 0;
-    } else {
-      container.innerHTML = createMatchElement(matchData[currentIndex]);
-      currentIndex++;
+    if (matchData.length === 0) {
+      container.innerHTML = "<p>No matches available</p>";
+      return;
     }
-  }
 
-  showNextMatch();
-  setInterval(showNextMatch, interval);
+    let currentIndex = 0;
+
+    function showNextMatch() {
+      console.log("next");
+      console.log(matchData);
+
+      if (currentIndex === matchData.length) {
+        console.log("hiu hiu");
+
+        container.innerHTML = createMatchListElement(matchData);
+        currentIndex = 0;
+      } else {
+        console.log("hu hu");
+
+        container.innerHTML = createMatchElement(matchData[currentIndex]);
+        currentIndex++;
+      }
+    }
+
+    showNextMatch();
+    // setInterval(showNextMatch, interval);
+  }, interval);
 }
 
 // Get the match container
